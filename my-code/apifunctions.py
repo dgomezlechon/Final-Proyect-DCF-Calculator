@@ -53,8 +53,12 @@ def is_scrapping(ticker):
 
     inc_statement=pd.read_excel(ruta)
     
-    inc_statement=inc_statement[["AMCX_income-statement_Annual_As_Originally_Reported","2019","2020","2021"]]
+    inc_statement=inc_statement[["AMCX_income-statement_Annual_As_Originally_Reported","2018","2019","2020","2021"]]
     
+    for i in range(len(inc_statement["AMCX_income-statement_Annual_As_Originally_Reported"])):
+
+        inc_statement["AMCX_income-statement_Annual_As_Originally_Reported"][i]=inc_statement["AMCX_income-statement_Annual_As_Originally_Reported"][i].strip()
+
     inc_statement.set_index("AMCX_income-statement_Annual_As_Originally_Reported",inplace=True)
 
     inc_statement.fillna(0,inplace=True)
@@ -89,7 +93,12 @@ def bs_scrapping(ticker):
 
     balance_sheet=pd.read_excel(ruta)
     
-    balance_sheet=balance_sheet[["AMCX_balance-sheet_Annual_As_Originally_Reported","2019","2020","2021"]]
+    balance_sheet=balance_sheet[["AMCX_balance-sheet_Annual_As_Originally_Reported","2018","2019","2020","2021"]]
+    
+    for i in range(len(balance_sheet["AMCX_balance-sheet_Annual_As_Originally_Reported"])):
+
+        balance_sheet["AMCX_balance-sheet_Annual_As_Originally_Reported"][i]=balance_sheet["AMCX_balance-sheet_Annual_As_Originally_Reported"][i].strip()
+
     
     balance_sheet.set_index("AMCX_balance-sheet_Annual_As_Originally_Reported",inplace=True)
 
@@ -125,10 +134,73 @@ def cf_scrapping(ticker):
 
     cash_flow=pd.read_excel(ruta)
     
-    cash_flow=cash_flow[["AMCX_cash-flow_Annual_As_Originally_Reported","2019","2020","2021"]]
-    
+    cash_flow=cash_flow[["AMCX_cash-flow_Annual_As_Originally_Reported","2018","2019","2020","2021"]]
+
+    for i in range(len(cash_flow["AMCX_cash-flow_Annual_As_Originally_Reported"])):
+
+        cash_flow["AMCX_cash-flow_Annual_As_Originally_Reported"][i]=cash_flow["AMCX_cash-flow_Annual_As_Originally_Reported"][i].strip()
+   
     cash_flow.set_index("AMCX_cash-flow_Annual_As_Originally_Reported",inplace=True)
 
     cash_flow.fillna(0,inplace=True)
     
     return cash_flow
+
+
+def cleaning_is(income_statement):
+    
+    '''This function eliminates the extra lines in the income statement so that we are only left with those relevant to the calculations'''
+    
+    unwanted_index=['Total Revenue', 'Gross Profit','Cost of Revenue', 'Operating Income/Expenses','Depreciation, Amortization and Depletion', 'Total Operating Profit/Loss','Non-Operating Income/Expenses, Total','Total Net Finance Income/Expense', 'Net Interest Income/Expense','Irregular Income/Expenses', 'Pretax Income', 'Net Income from Continuing Operations',
+       'Net Income after Extraordinary Items and Discontinued Operations','Net Income after Non-Controlling/Minority Interests',
+       'Net Income Available to Common Stockholders',
+       'Diluted Net Income Available to Common Stockholders',
+       'Income Statement Supplemental Section',
+       'Reported Normalized and Operating Income/Expense Supplemental Section',
+       'Total Revenue as Reported, Supplemental',
+       'Operating Expense as Reported, Supplemental',
+       'Total Operating Profit/Loss as Reported, Supplemental',
+       'Reported Normalized Income', 'Reported Effective Tax Rate',
+       'Reported Normalized Operating Profit', 'Discontinued Operations',
+       'Basic EPS', 'Basic EPS from Continuing Operations',
+       'Basic EPS from Discontinued Operations', 'Diluted EPS',
+       'Diluted EPS from Continuing Operations',
+       'Diluted EPS from Discontinued Operations',
+       'Basic Weighted Average Shares Outstanding',
+       'Diluted Weighted Average Shares Outstanding',
+       'Reported Normalized Diluted EPS', 'Basic EPS', 'Diluted EPS',
+       'Basic WASO', 'Diluted WASO', 'Fiscal year ends in Dec 31 | USD']
+    
+    for i in unwanted_index:
+        
+        if i in income_statement.index:
+    
+            income_statement=income_statement.drop(i,axis=0)
+        
+    return income_statement
+
+
+def cleaning_bs(balance_sheet):
+    
+    '''This function eliminates the extra lines in the balance sheet so that we are only left with those relevant to the calculations'''
+        
+    unwanted_index=["Total Current Assets","Cash and Cash Equivalents","Trade/Accounts Receivable, Current","Gross Trade/Accounts Receivable, Current",
+    "Allowance/Adjustments for Trade/Accounts Receivable, Current","Amount Due From Related Parties, Current","Deferred Tax Assets, Current","Total Non-Current Assets","Net Property, Plant and Equipment","Properties",
+    "Leasehold and Improvements","Machinery, Furniture and Equipment","Furniture, Fixtures and Office Equipment","Leased Property, Plant and Equipment","Other Property, Plant and Equipment","Accumulated Depreciation",
+    "Net Intangible Assets","Trademarks and Patents","Licenses and Rights","Customer Relationships","Other Intangible Assets","Gross Goodwill and Other Intangible Assets","Accumulated Amortization of Intangible Assets","Accumulated Amortization of Intangibles other than Goodwill"
+    ,"Accumulated Amortization of Trademarks and Patents","Accumulated Amortization of Customer Relationships","Accumulated Amortization of Other Intangible Assets","Trade and Other Receivables, Non-Current","Amount Due from Related Parties, Non-Current","Total Liabilities"
+    ,"Total Current Liabilities","Trade/Accounts Payable, Current","Interest Payable, Current","Taxes Payable, Current","Trade Notes Payable, Current"
+    ,"Amount Due to Related Parties/Shareholders, Current","Payables and Accrued Expenses, Current","Accrued Expenses, Current","Financial Liabilities, Current"
+    ,"Current Debt and Capital Lease Obligation","Current Portion of Long Term Debt and Capital Lease","Provision for Employee Entitlements, Current"
+    ,"Deferred Income/Customer Advances/Billings in Excess of Cost, Current","Other Deferred Liabilities, Current","Financial Liabilities, Non-Current"
+    ,"Long Term Debt","Notes Payables, Non-Current","Bank/Institutional Loans, Non-Current","Other Loans, Non-Current","Capital Lease Obligations, Non-Current"
+    ,"Deferred Tax Liabilities, Non-Current","Total Equity","Equity Attributable to Parent Stockholders","Paid in Capital","Common Stock"
+    ,"Preferred Stock","Additional Paid in Capital/Share Premium","Total Non-Current Liabilities"]
+            
+    for i in unwanted_index:
+        
+        if i in balance_sheet.index:
+    
+            balance_sheet=balance_sheet.drop(i,axis=0)
+        
+    return balance_sheet
