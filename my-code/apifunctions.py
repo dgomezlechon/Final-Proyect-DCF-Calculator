@@ -225,3 +225,30 @@ def add_columns(dataframes,new_years):
             
             i[j]=0
     
+
+def debt_due_year(debt_types,dataframe):
+
+    '''This function sees the types of debt and divides it into de due year so that we know the maturity of the debt'''
+
+    debt_year_1=0
+    debt_year_2=0
+    debt_year_3=0
+    debt_year_4=0
+    debt_year_5=0
+
+    for i in debt_types:
+
+        if i in dataframe.columns:
+
+            if "1" in i:
+                debt_year_1+= dataframe[i]["2021"]
+            if "2" in i:
+                debt_year_2+= dataframe[i]["2021"]
+            if "3" in i:
+                debt_year_3+= dataframe[i]["2021"]
+            if "4" in i:
+                debt_year_4+= dataframe[i]["2021"]
+            if "5" in i:
+                debt_year_5+= dataframe[i]["2021"]
+
+    return debt_year_1, debt_year_2, debt_year_3, debt_year_4, debt_year_5
