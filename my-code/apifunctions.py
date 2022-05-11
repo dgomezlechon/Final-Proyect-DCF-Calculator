@@ -204,3 +204,24 @@ def cleaning_bs(balance_sheet):
             balance_sheet=balance_sheet.drop(i,axis=0)
         
     return balance_sheet
+
+
+def cambio_a_float(dataframe):
+    
+    '''This function converts the dataframe to float'''
+    
+    for i in dataframe.columns:
+        
+        dataframe[i]=dataframe[i].astype(dtype="float64")
+
+
+def add_columns(dataframes,new_years):
+
+    '''This function adds the new year columns to the dataframes'''
+    
+    for i in dataframes:
+       
+        for j in new_years:
+            
+            i[j]=0
+    
