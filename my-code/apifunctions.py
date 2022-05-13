@@ -252,3 +252,38 @@ def debt_due_year(debt_types,dataframe):
                 debt_year_5+= dataframe[i]["2021"]
 
     return debt_year_1, debt_year_2, debt_year_3, debt_year_4, debt_year_5
+
+
+
+def remove_columns(dataset1,dataset2,dataset3):
+
+    '''This function  deletes the companies for which we dont have information in one of the three datasets¶'''
+    
+    for i in dataset1.index:
+        
+        if i not in dataset2.index or i not in dataset2.index:
+            
+            dataset1.drop(i,axis=0,inplace=True)
+    
+    for i in dataset2.index:
+        
+        if i not in dataset1.index or i not in dataset3.index:
+            
+            dataset2.drop(i,axis=0,inplace=True)   
+            
+    for i in dataset3.index:
+        
+        if i not in dataset1.index or i not in dataset3.index:
+            
+            dataset3.drop(i,axis=0,inplace=True)
+    
+
+def fill_na_mean(df): 
+    
+    ''' This function fills the missing values with the mean of the row'''
+    m = df.mean(axis=1)
+    for i, col in enumerate(df):
+        # using i allows for duplicate columns
+        # inplace *may* not always work here, so IMO the next line is preferred
+        # df.iloc[:, i].fillna(m, inplace=True)
+        df.iloc[:, i] = df.iloc[:, i].fillna(m)
