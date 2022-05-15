@@ -287,3 +287,73 @@ def fill_na_mean(df):
         # inplace *may* not always work here, so IMO the next line is preferred
         # df.iloc[:, i].fillna(m, inplace=True)
         df.iloc[:, i] = df.iloc[:, i].fillna(m)
+
+def last_year_rev(companies_to_use,parameters_new_t):
+
+    '''This function places into a list the last year renvenue of the companies that we are interested in'''
+    
+    years = ['2021A', '2022P', '2023P', '2024P', '2025P', '2026P']
+    sales_last_year=[]
+    sales = pd.Series(index=years)
+    
+    for i in companies_to_use:
+        sales_last_year.append(float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="SALES_REV_TURN") & (parameters_new_t["company_name"]==i)]))
+        
+    return sales_last_year
+
+
+def growth_rate(companies_to_use,sales_growth):
+
+    '''This function places into a list the growth rate of the companies that we are interested in'''
+    
+    growth_rate=[]
+    for i in companies_to_use:
+        
+        growth_rate.append(float(sales_growth["2021"][sales_growth.index==i]))
+        
+    return growth_rate    
+
+def parameters(companies_to_use,parameters_new_t):
+
+    '''Function to get the ebitda_margin,debt_percent,nwc_percent,capex_percent and tax_rate of the list of companies to analize'''
+    
+    ebitda_margin=[]
+    depr_percent=[]
+    nwc_percent=[]
+    capex_percent=[]
+    tax_rate=[]
+    
+    for i in companies_to_use:
+        
+        ebitda_margin.append(float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="EBITDA_TO_REVENUE") & (parameters_new_t["company_name"]==i)]))
+        depr_percent.append(float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="CF_DEPR_AMORT") & (parameters_new_t["company_name"]==i)])/float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="SALES_REV_TURN") & (parameters_new_t["company_name"]==i)]))
+        nwc_percent.append(float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="CHNG_WORK_CAP") & (parameters_new_t["company_name"]==i)])/float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="SALES_REV_TURN") & (parameters_new_t["company_name"]==i)]))
+        capex_percent.append(float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="CAP_EXPEND_TO_SALES") & (parameters_new_t["company_name"]==i)]))
+        tax_rate.append(float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="EFF_TAX_RATE") & (parameters_new_t["company_name"]==i)]))        
+        
+    return ebitda_margin,depr_percent,nwc_percent,capex_percent,tax_rate 
+
+
+def free_cash_flow(growth_rate,ebitda_margin,depr_percent,nwc_percent,capex_percent,tax_rate,sales_last_year):  
+    
+    '''This function calculates the free cash flow of the companies that we are interested in'''
+
+    years = ['2021A', '2022P', '2023P', '2024P', '2025P', '2026P']
+    sales = pd.Series(index=years)
+    sales['2021A'] = sales_last_year
+
+
+    growth_rate = growth_rate
+    for year in range(1, 6):
+        sales[year] = sales[year - 1] * (1 + growth_rate)
+
+    ebitda=sales*(ebitda_margin/100)
+    depreciation=sales * depr_percent
+    ebit= ebitda - depreciation
+    change_in_nwc=sales*nwc_percent
+    capex=-(sales*(capex_percent/100))
+    tax_payment = -ebit * (tax_rate/100)
+    tax_payment = tax_payment.apply(lambda x: min(x, 0))
+    free_cash_flow = ebit + depreciation + tax_payment + capex + change_in_nwc
+
+    return free_cash_flow
