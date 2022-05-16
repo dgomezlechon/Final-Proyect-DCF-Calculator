@@ -16,11 +16,11 @@ pd.set_option("display.max_rows", None, "display.max_columns", None)
 # In[2]:
 
 
-wacc=pd.read_csv("../data/wacc.csv",index_col = 'ID')
-prices=pd.read_csv("../data/prices.csv")
-sales_growth=pd.read_csv("../data/sales_growth.csv", index_col = 'ID')
-parameters_new_t=pd.read_csv("../data/parameters_new_t.csv")
-companies_to_use=pd.read_csv("../data/companies_to_use.csv")
+wacc=pd.read_csv("/data/wacc.csv",index_col = 'ID')
+prices=pd.read_csv("/data/prices.csv")
+sales_growth=pd.read_csv("/data/sales_growth.csv", index_col = 'ID')
+parameters_new_t=pd.read_csv("/data/parameters_new_t.csv")
+companies_to_use=pd.read_csv("/data/companies_to_use.csv")
 
 
 # In[3]:

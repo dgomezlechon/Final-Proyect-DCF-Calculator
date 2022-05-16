@@ -20,6 +20,7 @@ The objective of this project will be to gather trading data of several stocks (
 
 
 - Google (https://www.google.com/)
+d
 
 ## Data extraction and transformation
 
