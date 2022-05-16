@@ -99,22 +99,7 @@ for i in range(len(ebitda_margin)):
     
     free_cash_flows.append(free_cash_flow(growth_rate[i],ebitda_margin[i],depr_percent[i],nwc_percent[i],capex_percent[i],tax_rate[i],sales_last_year[i]))
 
-#### we get a bar chart with the free cash flows for the selected companies
 
-for i in range(len(free_cash_flows)):
-    
-    data=pd.DataFrame(free_cash_flows[i])
-    data.rename(columns={0: "Free Cash Flow"}, inplace=True)
-    
-    # we print the values of the variables being used:
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Growth Rate", growth_rate[i]*100)
-    #col2.metric("WACC", wacc[year][companies_to_use[i]])
-    #col3.metric("Humidity", "86%", "4%")
-
-    #we print the chart
-    #st.write(data)
-    st.bar_chart(data)
 
 # #### We calculate the dcf_value for each of the companies:
 
@@ -174,8 +159,21 @@ for i in output_distribution:
 # In[14]:
 
 
-mode
+#### we get a bar chart with the free cash flows for the selected companies
 
+for i in range(len(free_cash_flows)):
+    
+    data=pd.DataFrame(free_cash_flows[i])
+    data.rename(columns={0: "Free Cash Flow"}, inplace=True)
+    
+    # we print the values of the variables being used:
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Growth Rate", growth_rate[i]*100)
+    col2.metric("WACC", wacc[year][companies_to_use[i]])
+    col3.metric("DCF_Value", moda[i])
 
+    #we print the chart
+    #st.write(data)
+    st.bar_chart(data)
 
 
