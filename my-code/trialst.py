@@ -32,6 +32,7 @@ companies_available=companies_to_use['0'].values.tolist()
 # #### First we select the year and the list of companies for which we want to calculate the dcf_value and distributions
 
 # In[4]:
+## we input the year and companies we want to get the data for
 
 year_select = st.selectbox(
      'For which year would you like to see the dcf_value?',
@@ -41,7 +42,7 @@ st.write('You selected:', year_select)
 comps_select = st.multiselect(
      'Which companies would you like to select:',
      companies_available)
-st.write('You selected:', comps_select)  
+  
 
 
 companies_to_use=comps_select
@@ -93,6 +94,9 @@ for i in range(len(ebitda_margin)):
     
     free_cash_flows.append(free_cash_flow(growth_rate[i],ebitda_margin[i],depr_percent[i],nwc_percent[i],capex_percent[i],tax_rate[i],sales_last_year[i]))
 
+#### we get a bar chart with the free cash flows for the selected companies
+
+st.bar_chart(free_cash_flows)
 
 # #### We calculate the dcf_value for each of the companies:
 
