@@ -168,9 +168,10 @@ for i in range(len(free_cash_flows)):
     
     # we print the values of the variables being used:
     col1, col2, col3 = st.columns(3)
-    col1.metric("Growth Rate", growth_rate[i]*100)
+    col1.metric("Growth Rate", "{}%".format(growth_rate[i]*100))
     #col2.metric("WACC", wacc[year][companies_to_use[i]*100])
-    col3.metric("DCF_Value", mode[i])
+    col3.metric("DCF_Value", "{}M".format(mode[i]/1000000))
+
 
     #we print the chart
     #st.write(data)
