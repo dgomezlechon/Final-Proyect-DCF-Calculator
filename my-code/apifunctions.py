@@ -335,7 +335,7 @@ def parameters(companies_to_use,parameters_new_t,year):
     return ebitda_margin,depr_percent,nwc_percent,capex_percent,tax_rate 
 
 
-def free_cash_flow(growth_rate,ebitda_margin,depr_percent,nwc_percent,capex_percent,tax_rate,sales_last_year):  
+def free_cash_flow(growth_rate,ebitda_margin,depr_percent,nwc_percent,capex_percent,tax_rate,sales_last_year,year):  
     
     '''This function calculates the free cash flow of the companies that we are interested in'''
 
