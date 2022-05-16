@@ -28,6 +28,11 @@ companies_to_use=pd.read_csv("data/companies_to_use.csv")
 
 companies_available=companies_to_use['0'].values.tolist()
 
+#### We add layout to streamlit
+
+st.title("DCF_Value Calcualtor")
+st.subheader("This app calculates the DCF value of a company")
+
 
 # #### First we select the year and the list of companies for which we want to calculate the dcf_value and distributions
 
