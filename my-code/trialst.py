@@ -8,7 +8,6 @@ import pandas as pd
 import numpy as np
 from apifunctions import *
 #import matplotlib.pyplot as plt
-from scipy import stats
 import streamlit as st
 
 pd.set_option("display.max_rows", None, "display.max_columns", None)
