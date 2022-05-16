@@ -33,13 +33,14 @@ companies_available=companies_to_use['0'].values.tolist()
 
 # In[4]:
 
-
-year = st.text_input("Enter year:")
-st.title(year)
+year_select = st.selectbox(
+     'For which year would you like to see the dcf_value?',
+     ('2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020','2021'))
+st.write('You selected:', year_select)
 
 
 companies_to_use=['J UN Equity','BR UN Equity']
-year="2021"
+year=year_select
 #companies_to_use=['J UN Equity','BR UN Equity']
 
 
