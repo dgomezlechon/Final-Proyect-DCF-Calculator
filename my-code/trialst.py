@@ -171,8 +171,9 @@ for i in range(len(free_cash_flows)):
     col1, col2, col3 = st.columns(3)
     col1.metric("Growth Rate", "{}%".format(round(growth_rate[i]*100,2)))
     col2.metric("Perpetuity Growth Rate", "{}%".format(round((growth_rate[i]/5)*100,2)))
-    col3.metric("DCF_Value", "{}M".format(round(mode[i]/1000000)))
+    col3.metric("DCF_Value", "{}M".format(f'{round(mode[i]/1000000):,}'))
 
+#f'{1000000:,}'
 
     #we print the chart
     #st.write(data)
