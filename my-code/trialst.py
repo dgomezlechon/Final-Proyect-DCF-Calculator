@@ -38,8 +38,13 @@ year_select = st.selectbox(
      ('2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020','2021'))
 st.write('You selected:', year_select)
 
+comps_select = st.multiselect(
+     'Which companies would you like to select:',
+     companies_available)
+st.write('You selected:', comps_select)  
 
-companies_to_use=['J UN Equity','BR UN Equity']
+
+companies_to_use=comps_select
 year=year_select
 #companies_to_use=['J UN Equity','BR UN Equity']
 
