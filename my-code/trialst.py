@@ -34,11 +34,12 @@ companies_available=companies_to_use['0'].values.tolist()
 # In[4]:
 
 
-year = st.text_input("Enter your name")
+year = st.text_input("Enter year:")
 st.title(year)
 
+
 companies_to_use=['J UN Equity','BR UN Equity']
-#year="2021"
+year="2021"
 #companies_to_use=['J UN Equity','BR UN Equity']
 
 
