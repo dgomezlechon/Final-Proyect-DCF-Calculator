@@ -7,7 +7,6 @@
 import pandas as pd
 import numpy as np
 from apifunctions import *
-import datetime
 import matplotlib.pyplot as plt
 from scipy import stats
 import streamlit as st
@@ -41,7 +40,7 @@ companies_to_use=companies_to_use
 
 
 # #### We first get the last year revenue of the companies we are interested in:
-# 
+
 
 # In[5]:
 
