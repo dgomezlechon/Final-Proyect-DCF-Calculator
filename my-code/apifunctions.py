@@ -308,7 +308,7 @@ def growth_rate(companies_to_use,sales_growth,year):
     '''This function places into a list the growth rate of the companies that we are interested in'''
     
     growth_rate=[]
-    for i,b in companies_to_use,range(len(companies_to_use)):
+    for i in companies_to_use:
         
         growth_rate.append(float(sales_growth[year][sales_growth.index==i]))
         
