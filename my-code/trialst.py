@@ -7,7 +7,7 @@
 import pandas as pd
 import numpy as np
 from apifunctions import *
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from scipy import stats
 import streamlit as st
 
@@ -135,8 +135,8 @@ mode=[]
 for i in output_distribution:
     
     mode.append(max(set(i), key=i.count))
-    plt.hist(i, bins = 20)
-    plt.show()
+    #plt.hist(i, bins = 20)
+    #plt.show()
 
 
 # In[14]:
