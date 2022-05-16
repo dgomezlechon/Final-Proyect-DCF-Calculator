@@ -311,9 +311,6 @@ def growth_rate(companies_to_use,sales_growth,year):
     for i,b in companies_to_use,range(len(companies_to_use)):
         
         growth_rate.append(float(sales_growth[year][sales_growth.index==i]))
-
-        if growth_rate[b] > 8:
-            growth_rate[b]=8
         
     return growth_rate    
 
