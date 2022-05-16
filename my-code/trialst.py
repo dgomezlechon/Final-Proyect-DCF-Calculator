@@ -109,7 +109,7 @@ for i in range(len(free_cash_flows)):
     # we print the values of the variables being used:
     col1, col2, col3 = st.columns(3)
     col1.metric("Growth Rate", growth_rate[i])
-    col2.metric("WACC",wacc[year][i])
+    col2.metric("WACC",wacc[year][companies_to_use[i]])
     col3.metric("Humidity", "86%", "4%")
 
     #we print the chart
