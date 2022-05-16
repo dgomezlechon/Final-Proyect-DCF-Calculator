@@ -105,6 +105,14 @@ for i in range(len(free_cash_flows)):
     
     data=pd.DataFrame(free_cash_flows[i])
     data.rename(columns={0: "Free Cash Flow"}, inplace=True)
+    
+    # we print the values of the variables being used:
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Growth Rate", growth_rate[i])
+    col2.metric("WACC",wacc[year][i])
+    col3.metric("Humidity", "86%", "4%")
+
+    #we print the chart
     #st.write(data)
     st.bar_chart(data)
 
@@ -124,7 +132,7 @@ wacc.columns = ['2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2
 dcf_values=[]
 for i in range(len(ebitda_margin)):
     
-    dcf_values.append(terminal_value(wacc["2021"][i],free_cash_flows[i],growth_rate[i]))
+    dcf_values.append(terminal_value(wacc[year][i],free_cash_flows[i],growth_rate[i]))
 
 
 # #### We iterate 10,000 times the values of sales_growth, ebitda_margin and nwc_percent  using a monte_carlo simulation to get the distribution of the price for each company
