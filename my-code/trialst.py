@@ -98,6 +98,16 @@ for i in range(len(ebitda_margin)):
 
 st.bar_chart(free_cash_flows)
 
+for i in free_cash_flows:
+
+    data = pd.DataFrame({
+        'index': ['2021A', '2022P', '2023P', '2024P', '2025P', '2026P'],
+        'free_cash_flows': free_cash_flows[i],
+    }).set_index('index')
+
+    st.write(data)
+    st.bar_chart(data)
+
 # #### We calculate the dcf_value for each of the companies:
 
 # In[10]:
