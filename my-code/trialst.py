@@ -26,7 +26,7 @@ companies_to_use=pd.read_csv("data/companies_to_use.csv")
 # In[3]:
 
 
-companies_to_use=companies_to_use['0'].values.tolist()
+companies_available=companies_to_use['0'].values.tolist()
 
 
 # #### First we select the year and the list of companies for which we want to calculate the dcf_value and distributions
@@ -35,7 +35,9 @@ companies_to_use=companies_to_use['0'].values.tolist()
 
 
 year="2021"
-companies_to_use=companies_to_use
+companies_to_use=['J UN Equity',
+ 'BR UN Equity',
+ 'GPC UN Equity']
 
 
 # #### We first get the last year revenue of the companies we are interested in:
