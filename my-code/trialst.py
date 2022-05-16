@@ -166,6 +166,7 @@ for i in range(len(free_cash_flows)):
     data=pd.DataFrame(free_cash_flows[i])
     data.rename(columns={0: "Free Cash Flow"}, inplace=True)
     
+    st.subheader(companies_to_use[i])
     # we print the values of the variables being used:
     col1, col2, col3 = st.columns(3)
     col1.metric("Growth Rate", "{}%".format(growth_rate[i]*100))
