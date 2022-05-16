@@ -288,7 +288,7 @@ def fill_na_mean(df):
         # df.iloc[:, i].fillna(m, inplace=True)
         df.iloc[:, i] = df.iloc[:, i].fillna(m)
 
-def last_year_rev(companies_to_use,parameters_new_t):
+def last_year_rev(companies_to_use,parameters_new_t,year):
 
     '''This function places into a list the last year renvenue of the companies that we are interested in'''
     
@@ -297,23 +297,23 @@ def last_year_rev(companies_to_use,parameters_new_t):
     sales = pd.Series(index=years)
     
     for i in companies_to_use:
-        sales_last_year.append(float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="SALES_REV_TURN") & (parameters_new_t["company_name"]==i)]))
+        sales_last_year.append(float(parameters_new_t[year][(parameters_new_t["DATE"]=="SALES_REV_TURN") & (parameters_new_t["company_name"]==i)]))
         
     return sales_last_year
 
 
-def growth_rate(companies_to_use,sales_growth):
+def growth_rate(companies_to_use,sales_growth,year):
 
     '''This function places into a list the growth rate of the companies that we are interested in'''
     
     growth_rate=[]
     for i in companies_to_use:
         
-        growth_rate.append(float(sales_growth["2021"][sales_growth.index==i]))
+        growth_rate.append(float(sales_growth[year][sales_growth.index==i]))
         
     return growth_rate    
 
-def parameters(companies_to_use,parameters_new_t):
+def parameters(companies_to_use,parameters_new_t,year):
 
     '''Function to get the ebitda_margin,debt_percent,nwc_percent,capex_percent and tax_rate of the list of companies to analize'''
     
@@ -325,11 +325,11 @@ def parameters(companies_to_use,parameters_new_t):
     
     for i in companies_to_use:
         
-        ebitda_margin.append(float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="EBITDA_TO_REVENUE") & (parameters_new_t["company_name"]==i)]))
-        depr_percent.append(float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="CF_DEPR_AMORT") & (parameters_new_t["company_name"]==i)])/float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="SALES_REV_TURN") & (parameters_new_t["company_name"]==i)]))
-        nwc_percent.append(float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="CHNG_WORK_CAP") & (parameters_new_t["company_name"]==i)])/float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="SALES_REV_TURN") & (parameters_new_t["company_name"]==i)]))
-        capex_percent.append(float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="CAP_EXPEND_TO_SALES") & (parameters_new_t["company_name"]==i)]))
-        tax_rate.append(float(parameters_new_t["2021"][(parameters_new_t["DATE"]=="EFF_TAX_RATE") & (parameters_new_t["company_name"]==i)]))        
+        ebitda_margin.append(float(parameters_new_t[year][(parameters_new_t["DATE"]=="EBITDA_TO_REVENUE") & (parameters_new_t["company_name"]==i)])/100)
+        depr_percent.append(float(parameters_new_t[year][(parameters_new_t["DATE"]=="CF_DEPR_AMORT") & (parameters_new_t["company_name"]==i)])/float(parameters_new_t[year][(parameters_new_t["DATE"]=="SALES_REV_TURN") & (parameters_new_t["company_name"]==i)]))
+        nwc_percent.append(float(parameters_new_t[year][(parameters_new_t["DATE"]=="CHNG_WORK_CAP") & (parameters_new_t["company_name"]==i)])/float(parameters_new_t[year][(parameters_new_t["DATE"]=="SALES_REV_TURN") & (parameters_new_t["company_name"]==i)]))
+        capex_percent.append(float(parameters_new_t[year][(parameters_new_t["DATE"]=="CAP_EXPEND_TO_SALES") & (parameters_new_t["company_name"]==i)])/100)
+        tax_rate.append(float(parameters_new_t[year][(parameters_new_t["DATE"]=="EFF_TAX_RATE") & (parameters_new_t["company_name"]==i)])/100)        
         
     return ebitda_margin,depr_percent,nwc_percent,capex_percent,tax_rate 
 
@@ -347,13 +347,65 @@ def free_cash_flow(growth_rate,ebitda_margin,depr_percent,nwc_percent,capex_perc
     for year in range(1, 6):
         sales[year] = sales[year - 1] * (1 + growth_rate)
 
-    ebitda=sales*(ebitda_margin/100)
+    ebitda=sales*(ebitda_margin)
     depreciation=sales * depr_percent
     ebit= ebitda - depreciation
     change_in_nwc=sales*nwc_percent
-    capex=-(sales*(capex_percent/100))
-    tax_payment = -ebit * (tax_rate/100)
+    capex=-(sales*(capex_percent))
+    tax_payment = -ebit * (tax_rate)
     tax_payment = tax_payment.apply(lambda x: min(x, 0))
     free_cash_flow = ebit + depreciation + tax_payment + capex + change_in_nwc
 
     return free_cash_flow
+
+def terminal_value(wacc,free_cash_flows,growth_rate):
+
+    '''This function calculates the terminal_value of the selected companies'''
+
+    terminal_growth=growth_rate/5
+    
+    terminal_value=((free_cash_flows[-1] * (1 + terminal_growth)) / 
+                 (wacc - terminal_growth))
+    discount_factors = [(1 / (1 + wacc)) ** i for i in range (1,6)]
+    dcf_value = (sum(free_cash_flows[1:] * discount_factors) +
+            terminal_value * discount_factors[-1])
+
+    return dcf_value
+
+
+
+def run_mcs():
+    iterations = 10000
+    
+    # Create probability distributions
+    sales_growth_dist = np.random.normal(loc=growth_rate_f, scale=0.01, size=iterations)
+    ebitda_margin_dist = np.random.normal(loc=ebitda_margin_f, scale=0.02, size=iterations)
+    nwc_percent_dist = np.random.normal(loc=nwc_percent_f, scale=0.01, size=iterations)
+    
+    years = ['2021A', '2022P', '2023P', '2024P', '2025P', '2026P']
+    sales = pd.Series(index=years)
+    sales['2021A'] = sales_last_year_f
+    
+    output_distribution = []
+    for i in range(iterations):
+        for year in range(1, 6):
+            sales[year] = sales[year - 1] * (1 + sales_growth_dist[0])
+
+        ebitda=sales*(ebitda_margin_dist[i]/100)
+        depreciation=sales * depr_percent_f
+        ebit= ebitda - depreciation
+        change_in_nwc=sales*nwc_percent_dist[i]
+        capex=-(sales*(capex_percent_f/100))
+        tax_payment = -ebit * (tax_rate_f/100)
+        tax_payment = tax_payment.apply(lambda x: min(x, 0))
+        free_cash_flow = ebit + depreciation + tax_payment + capex + change_in_nwc
+
+        terminal_growth=sales_growth_dist[i]/5
+        terminal_value=((float(free_cash_flows_f[-1]) * (1 + terminal_growth)) / 
+                     (wacc_f - terminal_growth))
+        discount_factors = [(1 / (1 + wacc_f)) ** i for i in range (1,6)]
+        dcf_value = (sum(free_cash_flows_f[1:] * discount_factors) +
+                terminal_value * discount_factors[-1])
+        output_distribution.append(dcf_value)
+        
+    return output_distribution
