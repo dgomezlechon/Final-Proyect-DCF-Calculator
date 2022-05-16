@@ -2,31 +2,32 @@
 #%pip install openpyxl
 #%pip install xlrd
 
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
+#from selenium import webdriver
+#from selenium.webdriver.chrome.options import Options
+#from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 import time 
 
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
+#from selenium.webdriver.support.ui import WebDriverWait
+#from selenium.webdriver.common.by import By
+#from selenium.webdriver.support import expected_conditions as EC
+import numpy as np
 
-opciones=Options()
+#opciones=Options()
 
-opciones.add_experimental_option('excludeSwitches', ['enable-automation'])
-opciones.add_experimental_option('useAutomationExtension', False)
-opciones.headless=False    # si True, no aperece la ventana (headless=no visible)
-opciones.add_argument('--start-maximized')         # comienza maximizado
+#opciones.add_experimental_option('excludeSwitches', ['enable-automation'])
+#opciones.add_experimental_option('useAutomationExtension', False)
+#opciones.headless=False    # si True, no aperece la ventana (headless=no visible)
+#opciones.add_argument('--start-maximized')         # comienza maximizado
 #opciones.add_argument('user-data-dir=selenium')    # mantiene las cookies
 #opciones.add_extension('driver_folder/adblock.crx')       # adblocker
-opciones.add_argument('--incognito')
+#opciones.add_argument('--incognito')
 
 
 import warnings
 warnings.filterwarnings('ignore')
 
-PATH=ChromeDriverManager().install()
+#PATH=ChromeDriverManager().install()
 
 
 def is_scrapping(ticker):
@@ -374,8 +375,8 @@ def terminal_value(wacc,free_cash_flows,growth_rate):
 
 
 
-def run_mcs():
-    iterations = 10000
+def run_mcs(growth_rate_f,ebitda_margin_f,depr_percent_f,nwc_percent_f,capex_percent_f,tax_rate_f,sales_last_year_f,wacc_f,free_cash_flows_f):
+    iterations = 1000
     
     # Create probability distributions
     sales_growth_dist = np.random.normal(loc=growth_rate_f, scale=0.01, size=iterations)
