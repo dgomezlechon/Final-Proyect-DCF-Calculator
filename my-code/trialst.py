@@ -96,8 +96,8 @@ ebitda_margin,depr_percent,nwc_percent,capex_percent,tax_rate=parameters(compani
 
 free_cash_flows=[]
 for i in range(len(ebitda_margin)):
-    
-    free_cash_flows.append(free_cash_flow(growth_rate[i],ebitda_margin[i],depr_percent[i],nwc_percent[i],capex_percent[i],tax_rate[i],sales_last_year[i]))
+       
+    free_cash_flows.append(free_cash_flow(growth_rate[i],ebitda_margin[i],depr_percent[i],nwc_percent[i],capex_percent[i],tax_rate[i],sales_last_year[i],year))
 
 
 
