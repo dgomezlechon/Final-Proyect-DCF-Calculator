@@ -34,8 +34,11 @@ companies_available=companies_to_use['0'].values.tolist()
 # In[4]:
 
 
-year=input()
-companies_to_use=input()
+#year=st.text_input()
+#companies_to_use=st.text_input()
+year="2021"
+companies_to_use=['J UN Equity',
+ 'BR UN Equity']
 
 
 # #### We first get the last year revenue of the companies we are interested in:
