@@ -172,7 +172,7 @@ for i in range(len(free_cash_flows)):
     col1.metric("Growth Rate", "{}%".format(round(growth_rate[i]*100,2)))
     col2.metric("Perpetuity Growth Rate", "{}%".format(round((growth_rate[i]/5)*100,2)))
     col3.metric("DCF_Value", "{}M".format(f'{round(mode[i]/1000000):,}'))
-    col3.metric("WACC",wacc[year][companies_to_use[i]])
+    col3.metric("WACC",round(wacc[year][companies_to_use[i]]*100,2))
 
     #we print the chart
     #st.write(data)
