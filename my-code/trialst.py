@@ -96,12 +96,11 @@ for i in range(len(ebitda_margin)):
 
 #### we get a bar chart with the free cash flows for the selected companies
 
-st.bar_chart(free_cash_flows)
-
 for i in range(len(free_cash_flows)):
     
     data=pd.DataFrame(free_cash_flows[i])
-    st.write(data)
+    data.rename(columns={"0": "Free Cash Flow"}, inplace=True)
+    #st.write(data)
     st.bar_chart(data)
 
 # #### We calculate the dcf_value for each of the companies:
