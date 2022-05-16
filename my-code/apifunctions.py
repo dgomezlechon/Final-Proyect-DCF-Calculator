@@ -340,6 +340,7 @@ def free_cash_flow(growth_rate,ebitda_margin,depr_percent,nwc_percent,capex_perc
     '''This function calculates the free cash flow of the companies that we are interested in'''
 
     years = [int(year), int(year)+1, int(year)+2, int(year)+3, int(year)+4, int(year)+5]
+    years=[str(i) for i in years]
     sales = pd.Series(index=years)
     sales[year] = sales_last_year
 #hola
