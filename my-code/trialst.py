@@ -99,7 +99,7 @@ for i in range(len(ebitda_margin)):
 for i in range(len(free_cash_flows)):
     
     data=pd.DataFrame(free_cash_flows[i])
-    data.rename(columns={"0": "Free Cash Flow"}, inplace=True)
+    data.rename(columns={0: "Free Cash Flow"}, inplace=True)
     #st.write(data)
     st.bar_chart(data)
 
@@ -164,6 +164,5 @@ for i in output_distribution:
 mode
 
 
-st.write("""Hello world""")
 
 
