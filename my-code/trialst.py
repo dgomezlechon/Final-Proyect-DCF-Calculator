@@ -239,7 +239,7 @@ elif genre == 'DCF_evolution':
      chart_data.index=['2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']
      chart_data["Market_cap"]=to_draw
      chart_data.columns=["DCF value","Market_cap"]
-     #st.altair_chart(chart_data)
+     st.bar_chart(chart_data)
 
      #sns.barplot(x="DCF value", y="Market_cap", hue="Category", data=chart_data)
          
