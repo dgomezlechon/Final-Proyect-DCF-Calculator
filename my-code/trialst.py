@@ -200,8 +200,7 @@ elif genre == 'DCF_evolution':
             years[years.index(i)]=str(i)
 
         ####we do a function to get the yearly parameters of selected company
-
-     
+   
      yearly_sales_growth,yearly_sales,yearly_ebitda,yearly_depr_prct,yearly_nwc_percent,yearly_capex_percent,yearly_tax_rate=yearly_parameters(years,company,sales_growth,parameters_new_t)
 
      fcf_list=[]

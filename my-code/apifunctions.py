@@ -437,7 +437,7 @@ def yearly_parameters(years,company,sales_growth,parameters_new_t):
 
          for i in years:
 
-             yearly_sales_growth.append(sales_growth[i][company])
+             yearly_sales_growth.append(float(sales_growth[i][company]))
              yearly_sales.append(float(parameters_new_t[i][(parameters_new_t["company_name"]==company)&(parameters_new_t["DATE"]=="SALES_REV_TURN")]))
              yearly_ebitda.append(float(parameters_new_t[i][(parameters_new_t["company_name"]==company)&(parameters_new_t["DATE"]=="EBITDA_TO_REVENUE")])/100)
              yearly_depr_prct.append(float(parameters_new_t[i][(parameters_new_t["company_name"]==company)&(parameters_new_t["DATE"]=="CF_DEPR_AMORT")])/float(parameters_new_t[i][(parameters_new_t["DATE"]=="SALES_REV_TURN") & (parameters_new_t["company_name"]==company)]))
