@@ -171,6 +171,25 @@ if genre == 'DCF_value':
 
 elif genre == 'DCF_evolution':
      st.write('Your selected: DCF_evolution.')
+
+     #### We add layout to streamlit
+
+     st.title("DCF Historical Evolution")
+     st.subheader("This tab allows you to see the historical evolution of the dcf_value for a selected company")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 elif genre == 'Investing Strategy':
      st.write('Your selected:Investing Strategy')
     
