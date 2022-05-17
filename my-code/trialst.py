@@ -231,7 +231,7 @@ elif genre == 'DCF_evolution':
      to_draw=market_cap[market_cap.index==company].transpose()
      to_draw=to_draw[company].astype(dtype="float64")*1000000
 
-     st.bar_chart(mode)
+     st.bar_chart(mode,to_draw)
      st.bar_chart(to_draw)
          
 
