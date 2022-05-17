@@ -228,8 +228,10 @@ elif genre == 'DCF_evolution':
         
          mode.append(float(max(set(i), key=i.count)))
 
+     to_draw=market_cap[market_cap.index==company].transpose()
+
      st.bar_chart(mode)
-     st.bar_chart(market_cap[market_cap.index==company].transpose())
+     st.bar_chart(to_draw)
          
 
     
