@@ -225,7 +225,7 @@ elif genre == 'DCF_evolution':
 
      for i in output_distributions:
         
-         mode.append(max(set(i), key=i.count))
+         mode.append(float(max(set(i), key=i.count)))
          
 
      for i in range(len(mode)):
