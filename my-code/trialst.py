@@ -229,6 +229,7 @@ elif genre == 'DCF_evolution':
          mode.append(float(max(set(i), key=i.count)))
 
      to_draw=market_cap[market_cap.index==company].transpose()
+     to_draw=to_draw["CAT UN Equity"].astype(dtype="float64")
 
      st.bar_chart(mode)
      st.bar_chart(to_draw)
