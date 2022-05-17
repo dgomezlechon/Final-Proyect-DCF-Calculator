@@ -195,6 +195,12 @@ elif genre == 'DCF_evolution':
         years.append(a)
         a=a+1
 
+        #### we transform the years into strings:
+     for i in years:
+            years[years.index(i)]=str(i)
+
+        ####we do a function to get the yearly parameters of selected company
+
      def yearly_parameters(years,company):
 
          '''This function calculates the yearly parameters of the selected company across all the years'''
