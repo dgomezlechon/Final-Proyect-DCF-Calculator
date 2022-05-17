@@ -179,7 +179,7 @@ elif genre == 'DCF_evolution':
 
      comps_select = st.selectbox('Which company would you like to select:',
          companies_available)
-    companies_to_use=comps_select
+     companies_to_use=comps_select
 
 
 
