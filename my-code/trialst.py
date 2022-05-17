@@ -21,8 +21,8 @@ prices=pd.read_csv("data/prices.csv")
 sales_growth=pd.read_csv("data/sales_growth.csv", index_col = 'ID')
 parameters_new_t=pd.read_csv("data/parameters_new_t.csv")
 companies_to_use=pd.read_csv("data/companies_to_use.csv")
-market_cap=pd.read_csv("../data/market_cap.csv",index_col = 'ID')
-shares_outstanding=pd.read_csv("../data/shares_outstanding.csv",index_col = 'ID')
+market_cap=pd.read_csv("data/market_cap.csv",index_col = 'ID')
+shares_outstanding=pd.read_csv("data/shares_outstanding.csv",index_col = 'ID')
 
 
 # In[3]:
