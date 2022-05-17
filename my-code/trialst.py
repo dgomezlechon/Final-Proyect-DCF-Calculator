@@ -215,15 +215,22 @@ elif genre == 'DCF_evolution':
         
          terminal_values.append(terminal_value(wacc[years[i]][company],fcf_list[i],yearly_sales_growth[i]))
 
-     from scipy import stats
+     #from scipy import stats
      output_distributions=[]
      for i in range(len(years)):
 
-         output_distributions.append(float(stats.mode(run_mcs(yearly_sales_growth[i],yearly_ebitda[i],yearly_depr_prct[i],yearly_nwc_percent[i],yearly_capex_percent[i],yearly_tax_rate[i],yearly_sales[i],wacc[years[i]][company],fcf_list[i]))[0]))
+         output_distributions.append(run_mcs(yearly_sales_growth[i],yearly_ebitda[i],yearly_depr_prct[i],yearly_nwc_percent[i],yearly_capex_percent[i],yearly_tax_rate[i],yearly_sales[i],wacc[years[i]][company],fcf_list[i]))
 
-     for i in range(len(output_distributions)):
+     mode=[]
+
+         for i in output_distribution:
+        
+             mode.append(max(set(i), key=i.count))
+         
+
+     for i in range(len(mode)):
             
-             data=pd.DataFrame(output_distributions[i])
+             data=pd.DataFrame(mode[i])
              data.rename(columns={0: "DCF_value"}, inplace=True)
             
              st.subheader(company)
@@ -237,6 +244,8 @@ elif genre == 'DCF_evolution':
              #we print the chart
              #st.write(data)
              st.bar_chart(data)
+
+     
 
 
 
