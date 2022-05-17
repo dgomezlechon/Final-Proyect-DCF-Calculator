@@ -170,14 +170,16 @@ if genre == 'DCF_value':
 #### We add the different tab selection:
 
 elif genre == 'DCF_evolution':
-     st.write('Your selected: DCF_evolution.')
+     st.sidebar.write('Your selected: DCF_evolution.')
 
      #### We add layout to streamlit
 
      st.title("DCF Historical Evolution")
      st.subheader("This tab allows you to see the historical evolution of the dcf_value for a selected company")
 
-
+     comps_select = st.selectbox('Which company would you like to select:',
+         companies_available)
+    companies_to_use=comps_select
 
 
 
@@ -191,6 +193,6 @@ elif genre == 'DCF_evolution':
 
 
 elif genre == 'Investing Strategy':
-     st.write('Your selected:Investing Strategy')
+     st.sidebar.write('Your selected:Investing Strategy')
     
 
