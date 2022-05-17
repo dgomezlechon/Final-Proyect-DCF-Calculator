@@ -177,9 +177,9 @@ elif genre == 'DCF_evolution':
      st.title("DCF Historical Evolution")
      st.subheader("This tab allows you to see the historical evolution of the dcf_value for a selected company")
 
-     comps_select = st.selectbox('Which company would you like to select:',
+     company = st.selectbox('Which company would you like to select:',
          companies_available)
-     companies_to_use=comps_select
+     companies_to_use=company
 
      # añadimos slider para seleccionar los años para los que queremos el gráfico:
      from  datetime import time
@@ -195,11 +195,40 @@ elif genre == 'DCF_evolution':
         years.append(a)
         a=a+1
 
+     yearly_sales_growth,yearly_sales,yearly_ebitda,yearly_depr_prct,yearly_nwc_percent,yearly_capex_percent,yearly_tax_rate=yearly_parameters(years,company)
 
-     st.write(years)
+     fcf_list=[]
+     for i in range(len(years)):
 
+         fcf_list.append(free_cash_flow(yearly_sales_growth[i],yearly_ebitda[i],yearly_depr_prct[i],yearly_nwc_percent[i],yearly_capex_percent[i],yearly_tax_rate[i],yearly_sales[i],years[i]))
 
+     terminal_values=[]
+     for i in range(len(years)):
+        
+         terminal_values.append(terminal_value(wacc[years[i]][company],fcf_list[i],yearly_sales_growth[i]))
 
+     from scipy import stats
+     output_distributions=[]
+     for i in range(len(years)):
+
+         output_distributions.append(float(stats.mode(run_mcs(yearly_sales_growth[i],yearly_ebitda[i],yearly_depr_prct[i],yearly_nwc_percent[i],yearly_capex_percent[i],yearly_tax_rate[i],yearly_sales[i],wacc[years[i]][company],fcf_list[i]))[0]))
+
+     for i in range(len(output_distributions)):
+            
+             data=pd.DataFrame(output_distributions[i])
+             data.rename(columns={0: "DCF_value"}, inplace=True)
+            
+             st.subheader(company)
+             # we print the values of the variables being used:
+             col1, col2, col3,col4 = st.columns(4)
+             col1.metric("Growth Rate", "{}%".format(round(growth_rate[i]*100,2)))
+             col2.metric("Perpetuity Growth Rate", "{}%".format(round((growth_rate[i]/5)*100,2)))
+             col4.metric("DCF_Value", "{}M".format(f'{round(mode[i]/1000000):,}'))
+             col3.metric("WACC","{}%".format(round(wacc[year][companies_to_use[i]]*100,2)))
+
+             #we print the chart
+             #st.write(data)
+             st.bar_chart(data)
 
 
 
