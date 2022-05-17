@@ -187,7 +187,7 @@ elif genre == 'DCF_evolution':
 
      time_frame = st.slider(
      "Select time period:",
-     years)
+     2010,2021,(2010,2021))
      st.write("Selected years:", time_frame)
 
 
