@@ -234,9 +234,9 @@ elif genre == 'DCF_evolution':
      st.bar_chart(mode)
      st.bar_chart(to_draw)
 
-     #to_draw["DCF_Value"]=mode
+     to_draw["DCF_Value"]=mode
      
-     #st.bar_chart(to_draw)
+     st.bar_chart(to_draw)
 
      
 
