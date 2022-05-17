@@ -231,10 +231,16 @@ elif genre == 'DCF_evolution':
      to_draw=market_cap[market_cap.index==company].transpose()
      to_draw=to_draw[company].astype(dtype="float64")*1000000
 
-     st.bar_chart(mode,to_draw)
+     st.bar_chart(mode)
      st.bar_chart(to_draw)
          
+     import plotly.figure_factory as ff
+     import numpy as np
 
+     hist_data = [mode, to_draw]
+     group_labels = ['DCF value', 'Market cap']
+     fig = ff.create_distplot(hist_data, group_labels, bin_size=[.1, .25, .5])
+     st.plotly_chart(fig, use_container_width=True)
     
 
 
