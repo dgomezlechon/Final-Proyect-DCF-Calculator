@@ -226,6 +226,8 @@ elif genre == 'DCF_evolution':
      for i in output_distributions:
         
          mode.append(float(max(set(i), key=i.count)))
+
+     st.bar_chart(mode)
          
 
      for i in range(len(mode)):
@@ -242,7 +244,7 @@ elif genre == 'DCF_evolution':
              #col3.metric("WACC","{}%".format(round(wacc[year][companies_to_use[i]]*100,2)))
 
              #we print the chart
-             #st.write(data)
+             
              st.write(data)
 
      
