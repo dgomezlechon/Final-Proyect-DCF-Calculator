@@ -256,27 +256,39 @@ def debt_due_year(debt_types,dataframe):
 
 
 
-def remove_columns(dataset1,dataset2,dataset3):
+def remove_columns(dataset1,dataset2,dataset3,dataset4,dataset5):
 
     '''This function  deletes the companies for which we dont have information in one of the three datasets¶'''
     
     for i in dataset1.index:
         
-        if i not in dataset2.index or i not in dataset2.index:
+        if i not in dataset2.index or i not in dataset3.index or i not in dataset4.index or i not in dataset5.index:
             
             dataset1.drop(i,axis=0,inplace=True)
     
     for i in dataset2.index:
         
-        if i not in dataset1.index or i not in dataset3.index:
+        if i not in dataset1.index or i not in dataset3.index or i not in dataset4.index or i not in dataset5.index:
             
             dataset2.drop(i,axis=0,inplace=True)   
             
     for i in dataset3.index:
         
-        if i not in dataset1.index or i not in dataset3.index:
+        if i not in dataset1.index or i not in dataset3.index or i not in dataset4.index or i not in dataset5.index:
             
             dataset3.drop(i,axis=0,inplace=True)
+
+    for i in dataset4.index:
+
+        if i not in dataset1.index or i not in dataset2.index or i not in dataset4.index or i not in dataset5.index:
+            
+            dataset4.drop(i,axis=0,inplace=True)
+
+    for i in dataset5.index:
+
+        if i not in dataset1.index or i not in dataset2.index or i not in dataset4.index or i not in dataset3.index:
+            
+            dataset5.drop(i,axis=0,inplace=True)
     
 
 def fill_na_mean(df): 
