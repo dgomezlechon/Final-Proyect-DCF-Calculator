@@ -192,8 +192,8 @@ elif genre == 'DCF_evolution':
      years=[]
      a=time_frame[0]
      while time_frame[1] not in years:
-     years.append(a+1)
-     a=a+1
+        years.append(a+1)
+        a=a+1
 
 
      st.write(years)
