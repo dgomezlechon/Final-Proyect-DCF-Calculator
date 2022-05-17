@@ -181,6 +181,15 @@ elif genre == 'DCF_evolution':
          companies_available)
      companies_to_use=comps_select
 
+     years=['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020','2021']
+
+     from  datetime import time
+
+     time_frame = st.slider(
+     "Select time period:",
+     2010,2021,(1))
+     st.write("Selected years:", time_frame)
+
 
 
 
