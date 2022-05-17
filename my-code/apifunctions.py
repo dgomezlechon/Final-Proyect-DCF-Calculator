@@ -447,3 +447,14 @@ def yearly_parameters(years,company,sales_growth,parameters_new_t):
 
     
          return yearly_sales_growth,yearly_sales,yearly_ebitda,yearly_depr_prct,yearly_nwc_percent,yearly_capex_percent,yearly_tax_rate
+
+def y_growth_rate(company,sales_growth,years):
+
+    '''This function places into a list the growth rate of the companies that we are interested in'''
+    
+    yearly_growth_rate=[]
+    for i in years:
+        
+        yearly_growth_rate.append(float(sales_growth[i][company]))
+        
+    return yearly_growth_rate 
