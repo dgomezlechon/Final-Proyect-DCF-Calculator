@@ -35,7 +35,7 @@ genre = st.sidebar.radio(
      ('DCF_value', 'DCF_evolution', 'Investing Strategy'))
 
 if genre == 'DCF_value':
-     st.write('Your selected: DCF_value.')
+     st.sidebar.write('Your selected: DCF_value.')
 
      #### We add layout to streamlit
 
