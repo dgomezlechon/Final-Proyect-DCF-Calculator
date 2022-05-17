@@ -234,24 +234,11 @@ elif genre == 'DCF_evolution':
      st.bar_chart(mode)
      st.bar_chart(to_draw)
 
-     to_draw["DCF_Value"]=mode
-     #chart_data = pd.DataFrame(mode)
-     #chart_data.index=['2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']
-     #chart_data["Market_cap"]=to_draw
-     #chart_data.columns=["DCF value","Market_cap"]
-     st.bar_chart(to_draw)
+     #to_draw["DCF_Value"]=mode
+     
+     #st.bar_chart(to_draw)
 
-     #sns.barplot(x="DCF value", y="Market_cap", hue="Category", data=chart_data)
-         
-     #import plotly.figure_factory as ff
-     #import numpy as np
-
-     #hist_data = [mode, to_draw]
-     #group_labels = ['DCF value', 'Market cap']
-     #fig = ff.create_distplot(hist_data, group_labels, bin_size=[.1, .25, .5])
-     #st.plotly_chart(fig, use_container_width=True)
-    
-
+     
 
 
 
