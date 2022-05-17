@@ -161,6 +161,20 @@ for i in output_distribution:
 # In[14]:
 
 
+#### We add the different tab selection:
+
+genre = st.radio(
+     "What would you like to see?",
+     ('DCF_value', 'DCF_evolution', 'Investing Strategy'))
+
+if genre == 'DCF_value':
+     st.write('Your selected: DCF_value.')
+elif genre == 'DCF_evolution':
+     st.write('Your selected: DCF_evolution.')
+elif genre == 'Investing Strategy':
+     st.write('Your selected:Investing Strategy')
+    
+
 #### we get a bar chart with the free cash flows for the selected companies
 
 for i in range(len(free_cash_flows)):
