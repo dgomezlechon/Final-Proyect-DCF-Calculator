@@ -30,26 +30,6 @@ shares_outstanding=pd.read_csv("data/shares_outstanding.csv",index_col = 'ID')
 
 companies_available=companies_to_use['0'].values.tolist()
 
-#### We add layout to streamlit
-
-st.title("DCF_Value Calcualtor")
-st.subheader("This app calculates the DCF value of a company")
-
-
-# #### First we select the year and the list of companies for which we want to calculate the dcf_value and distributions
-
-# In[4]:
-## we input the year and companies we want to get the data for
-
-year_select = st.selectbox(
-     'For which year would you like to see the dcf_value?',
-     ('2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020','2021'))
-st.write('You selected:', year_select)
-
-comps_select = st.multiselect(
-     'Which companies would you like to select:',
-     companies_available)
-  
 
 
 companies_to_use=comps_select
@@ -169,6 +149,28 @@ genre = st.radio(
 
 if genre == 'DCF_value':
      st.write('Your selected: DCF_value.')
+
+     #### We add layout to streamlit
+
+     st.title("DCF_Value Calcualtor")
+     st.subheader("This app calculates the DCF value of a company")
+
+
+     #### First we select the year and the list of companies for which we want to calculate the dcf_value and distributions
+
+     # In[4]:
+     ## we input the year and companies we want to get the data for
+
+     year_select = st.selectbox(
+         'For which year would you like to see the dcf_value?',
+         ('2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020','2021'))
+     st.write('You selected:', year_select)
+
+     comps_select = st.multiselect(
+         'Which companies would you like to select:',
+         companies_available)
+        
+
 elif genre == 'DCF_evolution':
      st.write('Your selected: DCF_evolution.')
 elif genre == 'Investing Strategy':
