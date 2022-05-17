@@ -195,6 +195,32 @@ elif genre == 'DCF_evolution':
         years.append(a)
         a=a+1
 
+     def yearly_parameters(years,company):
+
+     '''This function calculates the yearly parameters of the selected company across all the years'''
+
+         yearly_sales_growth=[]
+         yearly_sales=[]
+         yearly_ebitda=[]
+         yearly_depr_prct=[]
+         yearly_nwc_percent=[]
+         yearly_capex_percent=[]
+         yearly_tax_rate=[]
+
+         for i in years:
+
+             yearly_sales_growth.append(sales_growth[i][company])
+             yearly_sales.append(float(parameters_new_t[i][(parameters_new_t["company_name"]==company)&(parameters_new_t["DATE"]=="SALES_REV_TURN")]))
+             yearly_ebitda.append(float(parameters_new_t[i][(parameters_new_t["company_name"]==company)&(parameters_new_t["DATE"]=="EBITDA_TO_REVENUE")])/100)
+             yearly_depr_prct.append(float(parameters_new_t[i][(parameters_new_t["company_name"]==company)&(parameters_new_t["DATE"]=="CF_DEPR_AMORT")])/float(parameters_new_t[i][(parameters_new_t["DATE"]=="SALES_REV_TURN") & (parameters_new_t["company_name"]==company)]))
+             yearly_nwc_percent.append(float(parameters_new_t[i][(parameters_new_t["company_name"]==company)&(parameters_new_t["DATE"]=="CHNG_WORK_CAP")])/float(parameters_new_t[i][(parameters_new_t["DATE"]=="SALES_REV_TURN") & (parameters_new_t["company_name"]==company)]))
+             yearly_capex_percent.append(float(parameters_new_t[i][(parameters_new_t["company_name"]==company)&(parameters_new_t["DATE"]=="CAP_EXPEND_TO_SALES")])/100)
+             yearly_tax_rate.append(float(parameters_new_t[i][(parameters_new_t["company_name"]==company)&(parameters_new_t["DATE"]=="EFF_TAX_RATE")])/100)
+
+    
+         return yearly_sales_growth,yearly_sales,yearly_ebitda,yearly_depr_prct,yearly_nwc_percent,yearly_capex_percent,yearly_tax_rate
+
+     
      yearly_sales_growth,yearly_sales,yearly_ebitda,yearly_depr_prct,yearly_nwc_percent,yearly_capex_percent,yearly_tax_rate=yearly_parameters(years,company)
 
      fcf_list=[]
