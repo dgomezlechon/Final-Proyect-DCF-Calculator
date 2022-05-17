@@ -243,7 +243,7 @@ elif genre == 'DCF_evolution':
 
              #we print the chart
              #st.write(data)
-             st.bar_chart(data)
+             st.write(data)
 
      
 
