@@ -230,8 +230,8 @@ elif genre == 'DCF_evolution':
 
      for i in range(len(mode)):
             
-             data=pd.DataFrame(mode[i])
-             data.rename(columns={0: "DCF_value"}, inplace=True)
+             data=mode[i]
+             #data.rename(columns={0: "DCF_value"}, inplace=True)
             
              st.subheader(company)
              # we print the values of the variables being used:
