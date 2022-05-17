@@ -30,7 +30,7 @@ shares_outstanding=pd.read_csv("data/shares_outstanding.csv",index_col = 'ID')
 
 companies_available=companies_to_use['0'].values.tolist()
 
-genre = st.radio(
+genre = st.sidebar.radio(
      "What would you like to see?",
      ('DCF_value', 'DCF_evolution', 'Investing Strategy'))
 
