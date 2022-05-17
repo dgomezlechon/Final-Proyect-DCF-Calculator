@@ -197,7 +197,7 @@ elif genre == 'DCF_evolution':
 
      def yearly_parameters(years,company):
 
-     '''This function calculates the yearly parameters of the selected company across all the years'''
+         '''This function calculates the yearly parameters of the selected company across all the years'''
 
          yearly_sales_growth=[]
          yearly_sales=[]
