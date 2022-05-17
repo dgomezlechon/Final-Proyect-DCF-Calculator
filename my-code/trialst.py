@@ -223,32 +223,16 @@ elif genre == 'DCF_evolution':
 
      mode=[]
 
+     st.subheader(company)
      for i in output_distributions:
         
          mode.append(float(max(set(i), key=i.count)))
 
      st.bar_chart(mode)
+     st.bar_chart(market_cap[market_cap.index==company])
          
 
-     for i in range(len(mode)):
-            
-             data=mode[i]
-             #data.rename(columns={0: "DCF_value"}, inplace=True)
-            
-             st.subheader(company)
-             # we print the values of the variables being used:
-             #col1, col2, col3,col4 = st.columns(4)
-             #col1.metric("Growth Rate", "{}%".format(round(growth_rate[i]*100,2)))
-             #col2.metric("Perpetuity Growth Rate", "{}%".format(round((growth_rate[i]/5)*100,2)))
-             #col4.metric("DCF_Value", "{}M".format(f'{round(mode[i]/1000000):,}'))
-             #col3.metric("WACC","{}%".format(round(wacc[year][companies_to_use[i]]*100,2)))
-
-             #we print the chart
-             
-             st.write(data)
-
-     
-
+    
 
 
 
