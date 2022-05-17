@@ -6,7 +6,6 @@
 
 import pandas as pd
 import numpy as np
-import altair as alt
 from apifunctions import *
 #import matplotlib.pyplot as plt
 import streamlit as st
@@ -235,11 +234,12 @@ elif genre == 'DCF_evolution':
      st.bar_chart(mode)
      st.bar_chart(to_draw)
 
-     chart_data = pd.DataFrame(mode)
-     chart_data.index=['2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']
-     chart_data["Market_cap"]=to_draw
-     chart_data.columns=["DCF value","Market_cap"]
-     st.bar_chart(chart_data)
+     to_draw["DCF_Value"]=mode
+     #chart_data = pd.DataFrame(mode)
+     #chart_data.index=['2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']
+     #chart_data["Market_cap"]=to_draw
+     #chart_data.columns=["DCF value","Market_cap"]
+     st.bar_chart(to_draw)
 
      #sns.barplot(x="DCF value", y="Market_cap", hue="Category", data=chart_data)
          
