@@ -6,7 +6,7 @@
 
 import pandas as pd
 import numpy as np
-import seaborn as sns
+import altair as alt
 from apifunctions import *
 #import matplotlib.pyplot as plt
 import streamlit as st
@@ -241,7 +241,7 @@ elif genre == 'DCF_evolution':
      chart_data.columns=["DCF value","Market_cap"]
      #st.altair_chart(chart_data)
 
-     sns.barplot(x="DCF value", y="Market_cap", hue="Category", data=chart_data)
+     #sns.barplot(x="DCF value", y="Market_cap", hue="Category", data=chart_data)
          
      #import plotly.figure_factory as ff
      #import numpy as np
