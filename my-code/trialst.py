@@ -233,14 +233,15 @@ elif genre == 'DCF_evolution':
 
      st.bar_chart(mode)
      st.bar_chart(to_draw)
+     st.bar_chart(mode,to_draw,columns=["DCF valuation", "Market Cap"])
          
-     import plotly.figure_factory as ff
-     import numpy as np
+     #import plotly.figure_factory as ff
+     #import numpy as np
 
-     hist_data = [mode, to_draw]
-     group_labels = ['DCF value', 'Market cap']
-     fig = ff.create_distplot(hist_data, group_labels, bin_size=[.1, .25, .5])
-     st.plotly_chart(fig, use_container_width=True)
+     #hist_data = [mode, to_draw]
+     #group_labels = ['DCF value', 'Market cap']
+     #fig = ff.create_distplot(hist_data, group_labels, bin_size=[.1, .25, .5])
+     #st.plotly_chart(fig, use_container_width=True)
     
 
 
