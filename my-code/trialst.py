@@ -6,6 +6,7 @@
 
 import pandas as pd
 import numpy as np
+import altair as altair
 from apifunctions import *
 #import matplotlib.pyplot as plt
 import streamlit as st
