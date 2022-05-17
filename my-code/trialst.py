@@ -190,8 +190,11 @@ elif genre == 'DCF_evolution':
      st.write("Selected years:", time_frame)
      
      years=[]
-     for i in range(time_frame):
-         years.append(i)
+     a=time_frame[0]
+     while time_frame[1] not in years:
+     years.append(a+1)
+     a=a+1
+
 
      st.write(years)
 
