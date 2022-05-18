@@ -247,78 +247,158 @@ elif genre == 'Investing Strategy':
      st.sidebar.write('Your selected:Investing Strategy')
      #### We add layout to streamlit
 
-     st.title("Investing Strategy")
-     st.subheader("Backtest your investing strategy based on historical DCF values")
+     genre = st.sidebar.radio(
+     "Would you like to rebalance portfolio?",
+     ('Dont rebalance', 'Rebalance'))
 
-     #### we prepare the datasets
-     companies_to_use=pd.read_csv("data/companies_to_use.csv")
-     companies_to_use=companies_to_use['0'].values.tolist()
-     valuations=pd.read_csv("data/valuations.csv")
-     valuations["company_name"]=companies_to_use
-     valuations=valuations.set_index('company_name')
-     prices.columns = ['company_name','2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']
-     prices=prices.set_index('company_name')
-     prices=prices[prices.index.isin(companies_to_use)]
-     market_cap=market_cap[market_cap.index.isin(companies_to_use)]
-     prices = prices.reindex(companies_to_use)
-     market_cap=market_cap.reindex(companies_to_use)
+     if genre == 'Dont rebalance':
+         st.sidebar.write('Your selected: Dont rebalance.')
+
+         st.title("Investing Strategy")
+         st.subheader("Backtest your investing strategy based on historical DCF values")
+
+         #### we prepare the datasets
+         companies_to_use=pd.read_csv("data/companies_to_use.csv")
+         companies_to_use=companies_to_use['0'].values.tolist()
+         valuations=pd.read_csv("data/valuations.csv")
+         valuations["company_name"]=companies_to_use
+         valuations=valuations.set_index('company_name')
+         prices.columns = ['company_name','2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']
+         prices=prices.set_index('company_name')
+         prices=prices[prices.index.isin(companies_to_use)]
+         market_cap=market_cap[market_cap.index.isin(companies_to_use)]
+         prices = prices.reindex(companies_to_use)
+         market_cap=market_cap.reindex(companies_to_use)
+        
+         year_select = st.selectbox(
+             'Which year would you like to start the investment?',
+             ('2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020','2021'))
+         st.write('You buy on:', year_select)
+
+         final_year = st.selectbox(
+             'Which year would you like to end the investment?',
+             ('2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020','2021'))
+         st.write('You sell on:', final_year)
+
+         cantidad_str = st.text_input('Amount Invested', 'Input Amount')
+         st.write('The amount to invest is', cantidad_str)
+
+         cantidad=float(cantidad_str)
+
+         num_acciones_str = st.text_input('Number of companies', 'Input Number of Companies')
+         st.write('The number of companies to buy', num_acciones_str)
+
+         num_acciones=float(num_acciones_str)
+
+         year=year_select
      
-     year_select = st.selectbox(
-         'Which year would you like to start the investment?',
-         ('2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020','2021'))
-     st.write('You buy on:', year_select)
-
-     final_year = st.selectbox(
-         'Which year would you like to end the investment?',
-         ('2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020','2021'))
-     st.write('You sell on:', final_year)
-
-     cantidad_str = st.text_input('Amount Invested', 'Input Amount')
-     st.write('The amount to invest is', cantidad_str)
-
-     cantidad=float(cantidad_str)
-
-     num_acciones_str = st.text_input('Number of companies', 'Input Number of Companies')
-     st.write('The number of companies to buy', num_acciones_str)
-
-     num_acciones=float(num_acciones_str)
-
-     year=year_select
- 
-     undervalued_comps={}
-     yearly_undervalued_comps=[]
-     shares_in_portfolio=[]
-     values=[]
+         undervalued_comps={}
+         yearly_undervalued_comps=[]
+         shares_in_portfolio=[]
+         values=[]
 
 
-     i=year
-    
-     for j in range(len(companies_to_use)):
-    
-         if market_cap.index.equals(valuations.index):
-             if float(market_cap[i][companies_to_use[j]])<=0.7*float(valuations[i][companies_to_use[j]]):
-            
-                 a=0.7*float(valuations[i][companies_to_use[j]])-float(market_cap[i][companies_to_use[j]])
-                 undervalued_comps[companies_to_use[j]]=a/(0.7*float(valuations[i][companies_to_use[j]]))
-
-     dict(sorted(undervalued_comps.items(), key=lambda item: item[1],reverse=True))
-     top_stocks=list(undervalued_comps)[:int(num_acciones)]
-     number_stocks=[]
-
-     for i in top_stocks:
-    
-         a=(cantidad/num_acciones)//prices[year][i]
-         number_stocks.append(a)
-         a=0
-
-     gain=0
-     for i in range(len(top_stocks)):
-    
-         gain+=number_stocks[i]*prices[final_year][i]
-    
-     st.metric("Total value of portfolio", gain,  "{}%".format((gain-cantidad)/cantidad*100))
-
+         i=year
+        
+         for j in range(len(companies_to_use)):
+        
+             if market_cap.index.equals(valuations.index):
+                 if float(market_cap[i][companies_to_use[j]])<=0.7*float(valuations[i][companies_to_use[j]]):
                 
+                     a=0.7*float(valuations[i][companies_to_use[j]])-float(market_cap[i][companies_to_use[j]])
+                     undervalued_comps[companies_to_use[j]]=a/(0.7*float(valuations[i][companies_to_use[j]]))
 
-    
+         dict(sorted(undervalued_comps.items(), key=lambda item: item[1],reverse=True))
+         top_stocks=list(undervalued_comps)[:int(num_acciones)]
+         number_stocks=[]
+
+         for i in top_stocks:
+        
+             a=(cantidad/num_acciones)//prices[year][i]
+             number_stocks.append(a)
+             a=0
+
+         gain=0
+         for i in range(len(top_stocks)):
+        
+             gain+=number_stocks[i]*prices[final_year][i]
+        
+         st.metric("Total value of portfolio", gain,  "{}%".format((gain-cantidad)/cantidad*100))
+
+     if genre == 'Rebalance':
+         st.sidebar.write('Your selected: Rebalance.')
+
+         st.title("Investing Strategy")
+         st.subheader("Backtest your investing strategy based on historical DCF values")
+
+         #### we prepare the datasets
+         companies_to_use=pd.read_csv("data/companies_to_use.csv")
+         companies_to_use=companies_to_use['0'].values.tolist()
+         valuations=pd.read_csv("data/valuations.csv")
+         valuations["company_name"]=companies_to_use
+         valuations=valuations.set_index('company_name')
+         prices.columns = ['company_name','2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']
+         prices=prices.set_index('company_name')
+         prices=prices[prices.index.isin(companies_to_use)]
+         market_cap=market_cap[market_cap.index.isin(companies_to_use)]
+         prices = prices.reindex(companies_to_use)
+         market_cap=market_cap.reindex(companies_to_use)
+        
+         year_select = st.selectbox(
+             'Which year would you like to start the investment?',
+             ('2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020','2021'))
+         st.write('You buy on:', year_select)
+
+         final_year = st.selectbox(
+             'Which year would you like to end the investment?',
+             ('2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020','2021'))
+         st.write('You sell on:', final_year)
+
+         cantidad_str = st.text_input('Amount Invested', 'Input Amount')
+         st.write('The amount to invest is', cantidad_str)
+
+         cantidad=float(cantidad_str)
+
+         num_acciones_str = st.text_input('Number of companies', 'Input Number of Companies')
+         st.write('The number of companies to buy', num_acciones_str)
+
+         num_acciones=float(num_acciones_str)
+
+         year=year_select
+     
+         undervalued_comps={}
+         yearly_undervalued_comps=[]
+         shares_in_portfolio=[]
+         values=[]
+
+
+         i=year
+        
+         for j in range(len(companies_to_use)):
+        
+             if market_cap.index.equals(valuations.index):
+                 if float(market_cap[i][companies_to_use[j]])<=0.7*float(valuations[i][companies_to_use[j]]):
+                
+                     a=0.7*float(valuations[i][companies_to_use[j]])-float(market_cap[i][companies_to_use[j]])
+                     undervalued_comps[companies_to_use[j]]=a/(0.7*float(valuations[i][companies_to_use[j]]))
+
+         dict(sorted(undervalued_comps.items(), key=lambda item: item[1],reverse=True))
+         top_stocks=list(undervalued_comps)[:int(num_acciones)]
+         number_stocks=[]
+
+         for i in top_stocks:
+        
+             a=(cantidad/num_acciones)//prices[year][i]
+             number_stocks.append(a)
+             a=0
+
+         gain=0
+         for i in range(len(top_stocks)):
+        
+             gain+=number_stocks[i]*prices[final_year][i]
+        
+         st.metric("Total value of portfolio", gain,  "{}%".format((gain-cantidad)/cantidad*100))
+          
+
+        
 
