@@ -392,7 +392,7 @@ elif genre == 'Investing Strategy':
              gain=0
              for i in range(len(top_stocks)):
             
-                 gain+=number_stocks[i]*prices[year+1][i]
+                 gain+=number_stocks[i]*prices[str(year+1)][i]
 
              cantidad=gain-((gain-cantidad)*0.2)
              year=year+1
