@@ -250,6 +250,11 @@ elif genre == 'Investing Strategy':
      st.title("Investing Strategy")
      st.subheader("Backtest your investing strategy based on historical DCF values")
 
+     companies_to_use=companies_to_use['0'].values.tolist()
+     sales_growth.columns = ['2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']  
+     wacc.columns = ['2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']  
+     years = ['2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']
+
      for i in years:
          sales_last_year=last_year_rev(companies_to_use,parameters_new_t,i)
          growth_rate=growth_rate(companies_to_use,sales_growth,i)
