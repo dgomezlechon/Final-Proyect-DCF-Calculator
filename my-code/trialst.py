@@ -252,7 +252,7 @@ elif genre == 'Investing Strategy':
 
      #### we prepare the datasets
      companies_to_use=pd.read_csv("data/companies_to_use.csv")
-     companies_available=companies_to_use['0'].values.tolist()
+     companies_to_use=companies_to_use['0'].values.tolist()
      valuations=pd.read_csv("data/valuations.csv")
      valuations["company_name"]=companies_to_use
      valuations=valuations.set_index('company_name')
