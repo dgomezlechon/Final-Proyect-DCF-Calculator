@@ -250,51 +250,73 @@ elif genre == 'Investing Strategy':
      st.title("Investing Strategy")
      st.subheader("Backtest your investing strategy based on historical DCF values")
 
-     companies_to_use=companies_to_use['0'].values.tolist()
-     sales_growth.columns = ['2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']  
-     wacc.columns = ['2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']  
-     years = ['2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']
+     #### we prepare the datasets
+     valuations=pd.read_csv("data/valuations.csv")
+     valuations["company_name"]=companies_to_use
+     valuations=valuations.set_index('company_name')
+     prices.columns = ['company_name','2010', '2011', '2012', '2013','2014', '2015', '2016', '2017','2018', '2019', '2020', '2021']
+     prices=prices.set_index('company_name')
+     prices=prices[prices.index.isin(companies_to_use)]
+     market_cap=market_cap[market_cap.index.isin(companies_to_use)]
+     prices = prices.reindex(companies_to_use)
+     market_cap=market_cap.reindex(companies_to_use)
+     
+     year_select = st.selectbox(
+         'Which year would you like to start the investment?',
+         ('2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020','2021'))
+     st.write('You buy on:', year_select)
 
-     for i in years:
-         sales_last_year=last_year_rev(companies_to_use,parameters_new_t,i)
-         growth_rate=growth_rate(companies_to_use,sales_growth,i)
-         ebitda_margin,depr_percent,nwc_percent,capex_percent,tax_rate=parameters(companies_to_use,parameters_new_t,i)
-        
-         free_cash_flows=[]
-         for j in range(len(ebitda_margin)):
-        
-             free_cash_flows.append(free_cash_flow(growth_rate[j],ebitda_margin[j],depr_percent[j],nwc_percent[j],capex_percent[j],tax_rate[j],sales_last_year[j],i))
-        
-         dcf_values=[]
-         for k in range(len(ebitda_margin)):
-        
-             dcf_values.append(terminal_value(wacc[i][k],free_cash_flows[k],growth_rate[k]))
-        
-         output_distribution=[]
+     final_year = st.selectbox(
+         'Which year would you like to end the investment?',
+         ('2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020','2021'))
+     st.write('You sell on:', final_year)
 
-         for m in range(len(companies_to_use)):
+     cantidad_str = st.text_input('Amount Invested', 'Input Amount')
+     st.write('The amount to invest is', cantidad_str)
 
-        
-             growth_rate_f=growth_rate[m]
-             ebitda_margin_f=ebitda_margin[m]
-             depr_percent_f=depr_percent[m]
-             nwc_percent_f=nwc_percent[m]
-             capex_percent_f=capex_percent[m]
-             tax_rate_f=tax_rate[m]
-             sales_last_year_f=sales_last_year[m]
-             wacc_f=wacc[i][companies_to_use[m]]
-             free_cash_flows_f=free_cash_flows[m]
+     cantidad=float(cantidad_str)
 
-             output_distribution.append(run_mcs(growth_rate_f,ebitda_margin_f,depr_percent_f,nwc_percent_f,capex_percent_f,tax_rate_f,sales_last_year_f,wacc_f,free_cash_flows_f))
-            
-     mode=[]
+     num_acciones_str = st.text_input('Number of companies', 'Input Number of Companies')
+     st.write('The number of companies to buy', num_acciones_str)
 
-     for n in output_distribution:
-    
-         mode.append(max(set(n), key=n.count))
+     num_acciones=float(num_acciones_str)
 
-     st.write(mode)
+     year=year_select
  
+     undervalued_comps={}
+     yearly_undervalued_comps=[]
+     shares_in_portfolio=[]
+     values=[]
+
+
+     i=year
+    
+     for j in range(len(companies_to_use)):
+    
+         if market_cap.index.equals(valuations.index):
+             if float(market_cap[i][companies_to_use[j]])<=0.7*float(valuations[i][companies_to_use[j]]):
+            
+                 a=0.7*float(valuations[i][companies_to_use[j]])-float(market_cap[i][companies_to_use[j]])
+                 undervalued_comps[companies_to_use[j]]=a/(0.7*float(valuations[i][companies_to_use[j]]))
+
+     dict(sorted(undervalued_comps.items(), key=lambda item: item[1],reverse=True))
+     top_stocks=list(undervalued_comps)[:int(num_acciones)]
+     number_stocks=[]
+
+     for i in top_stocks:
+    
+         a=(cantidad/num_acciones)//prices[year][i]
+         number_stocks.append(a)
+         a=0
+
+     gain=0
+     for i in range(len(top_stocks)):
+    
+         gain+=number_stocks[i]*prices[final_year][i]
+    
+     st.metric("Total value of portfolio", gain, (gain-cantidad)/cantidad)
+
+                
 
     
 
