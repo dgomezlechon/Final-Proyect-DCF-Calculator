@@ -316,7 +316,7 @@ elif genre == 'Investing Strategy':
     
          gain+=number_stocks[i]*prices[final_year][i]
     
-     st.metric("Total value of portfolio", gain, (gain-cantidad)/cantidad)
+     st.metric("Total value of portfolio", gain,  "{}%".format((gain-cantidad)/cantidad*100))
 
                 
 
