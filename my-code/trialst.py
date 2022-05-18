@@ -368,7 +368,7 @@ elif genre == 'Investing Strategy':
      
          undervalued_comps={}
          
-         while year < final_year:
+         while int(year) < int(final_year):
              i=year
             
              for j in range(len(companies_to_use)):
