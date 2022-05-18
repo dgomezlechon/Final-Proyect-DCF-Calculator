@@ -243,12 +243,53 @@ elif genre == 'DCF_evolution':
 
 
 
-
-
-
-
-
 elif genre == 'Investing Strategy':
      st.sidebar.write('Your selected:Investing Strategy')
+     #### We add layout to streamlit
+
+     st.title("Investing Strategy")
+     st.subheader("Backtest your investing strategy based on historical DCF values")
+
+     for i in years:
+     sales_last_year=last_year_rev(companies_to_use,parameters_new_t,i)
+     growth_rate=growth_rate(companies_to_use,sales_growth,i)
+     ebitda_margin,depr_percent,nwc_percent,capex_percent,tax_rate=parameters(companies_to_use,parameters_new_t,i)
+    
+     free_cash_flows=[]
+     for j in range(len(ebitda_margin)):
+    
+         free_cash_flows.append(free_cash_flow(growth_rate[j],ebitda_margin[j],depr_percent[j],nwc_percent[j],capex_percent[j],tax_rate[j],sales_last_year[j],i))
+    
+     dcf_values=[]
+     for k in range(len(ebitda_margin)):
+    
+         dcf_values.append(terminal_value(wacc[i][k],free_cash_flows[k],growth_rate[k]))
+    
+     output_distribution=[]
+
+     for m in range(len(companies_to_use)):
+
+    
+         growth_rate_f=growth_rate[m]
+         ebitda_margin_f=ebitda_margin[m]
+         depr_percent_f=depr_percent[m]
+         nwc_percent_f=nwc_percent[m]
+         capex_percent_f=capex_percent[m]
+         tax_rate_f=tax_rate[m]
+         sales_last_year_f=sales_last_year[m]
+         wacc_f=wacc[i][companies_to_use[m]]
+         free_cash_flows_f=free_cash_flows[m]
+
+         output_distribution.append(run_mcs(growth_rate_f,ebitda_margin_f,depr_percent_f,nwc_percent_f,capex_percent_f,tax_rate_f,sales_last_year_f,wacc_f,free_cash_flows_f))
+        
+     mode=[]
+
+     for n in output_distribution:
+    
+         mode.append(max(set(n), key=n.count))
+
+     st.write(mode)
+ 
+
     
 
