@@ -388,14 +388,14 @@ elif genre == 'Investing Strategy':
                  a=(cantidad/num_acciones)//prices[year][i]
                  number_stocks.append(a)
                  a=0
-
+             year=int(year)
              gain=0
              for i in range(len(top_stocks)):
             
-                 gain+=number_stocks[i]*prices[final_year][i]
+                 gain+=number_stocks[i]*prices[year+1][i]
 
-             cantidad=gain*0.8
-             year=int(year)+1
+             cantidad=gain-((gain-cantidad)*0.2)
+             year=year+1
              year=str(year)
             
          st.metric("Total value of portfolio", gain,  "{}%".format((gain-cantidad)/cantidad*100))
