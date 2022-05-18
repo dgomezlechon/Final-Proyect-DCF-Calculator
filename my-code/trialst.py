@@ -367,38 +367,38 @@ elif genre == 'Investing Strategy':
          year=year_select
      
          undervalued_comps={}
-         yearly_undervalued_comps=[]
-         shares_in_portfolio=[]
-         values=[]
+         
+         while year < final_year:
+             i=year
+            
+             for j in range(len(companies_to_use)):
+            
+                 if market_cap.index.equals(valuations.index):
+                     if float(market_cap[i][companies_to_use[j]])<=0.7*float(valuations[i][companies_to_use[j]]):
+                    
+                         a=0.7*float(valuations[i][companies_to_use[j]])-float(market_cap[i][companies_to_use[j]])
+                         undervalued_comps[companies_to_use[j]]=a/(0.7*float(valuations[i][companies_to_use[j]]))
 
+             dict(sorted(undervalued_comps.items(), key=lambda item: item[1],reverse=True))
+             top_stocks=list(undervalued_comps)[:int(num_acciones)]
+             number_stocks=[]
 
-         i=year
-        
-         for j in range(len(companies_to_use)):
-        
-             if market_cap.index.equals(valuations.index):
-                 if float(market_cap[i][companies_to_use[j]])<=0.7*float(valuations[i][companies_to_use[j]]):
-                
-                     a=0.7*float(valuations[i][companies_to_use[j]])-float(market_cap[i][companies_to_use[j]])
-                     undervalued_comps[companies_to_use[j]]=a/(0.7*float(valuations[i][companies_to_use[j]]))
+             for i in top_stocks:
+            
+                 a=(cantidad/num_acciones)//prices[year][i]
+                 number_stocks.append(a)
+                 a=0
 
-         dict(sorted(undervalued_comps.items(), key=lambda item: item[1],reverse=True))
-         top_stocks=list(undervalued_comps)[:int(num_acciones)]
-         number_stocks=[]
+             gain=0
+             for i in range(len(top_stocks)):
+            
+                 gain+=number_stocks[i]*prices[final_year][i]
 
-         for i in top_stocks:
-        
-             a=(cantidad/num_acciones)//prices[year][i]
-             number_stocks.append(a)
-             a=0
-
-         gain=0
-         for i in range(len(top_stocks)):
-        
-             gain+=number_stocks[i]*prices[final_year][i]
-        
+             cantidad=gain*0.8
+             year=year+1
+            
          st.metric("Total value of portfolio", gain,  "{}%".format((gain-cantidad)/cantidad*100))
-          
+            
 
         
 
