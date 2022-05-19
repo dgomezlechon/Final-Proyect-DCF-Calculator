@@ -358,6 +358,7 @@ elif genre == 'Investing Strategy':
          st.write('The amount to invest is', cantidad_str)
 
          cantidad=float(cantidad_str)
+         cantidad_0=cantidad
 
          num_acciones_str = st.text_input('Number of companies', 'Input Number of Companies')
          st.write('The number of companies to buy', num_acciones_str)
@@ -398,7 +399,7 @@ elif genre == 'Investing Strategy':
              year=year+1
              year=str(year)
             
-         st.metric("Total value of portfolio", "{}".format(f'{round(gain):,}'),  "{}%".format(round(100*(gain-cantidad)/cantidad,2)))
+         st.metric("Total value of portfolio", "{}".format(f'{round(gain):,}'),  "{}%".format(round(100*(gain-cantidad_0)/cantidad,2)))
             
 
         
