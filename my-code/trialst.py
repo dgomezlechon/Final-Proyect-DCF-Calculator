@@ -320,7 +320,7 @@ elif genre == 'Investing Strategy':
 
          for i in top_stocks:
         
-             a=(cantidad/num_acciones)//prices[year][top_stocks[i]]
+             a=(cantidad/num_acciones)//prices[year][i]
              number_stocks.append(a)
              a=0
 
@@ -392,7 +392,7 @@ elif genre == 'Investing Strategy':
 
              for i in top_stocks:
             
-                 a=(cantidad/num_acciones)//prices[year][top_stocks[i]]
+                 a=(cantidad/num_acciones)//prices[year][i]
                  number_stocks.append(a)
                  a=0
              year=int(year)
