@@ -1,59 +1,55 @@
-# ETL Project
+# DCF Calculator
 
 ## Introduction
 
-In this project we are going to Extract, Transform and Load a series of Data. 
-The objective of this project will be to gather trading data of several stocks (Apple, Twitter and Microsoft) and to see how their price is affected when they release their earnings as well as to see the impact that beating or underperforming vs estimates has on them. Finally we want to be able to see for big changes in price what the main news on the stock were as of that date.
+In this project we are going to create a Discounted Cash Flow calculator. For this we are going to get fundamental data for the mebers of the SPX Index from the Bloomberg API and use it to create discounted cash flow models for the members of the index since 2010.
 
 ## Data Sources
 
-- Yahoo Finance (https://es.finance.yahoo.com/):
+- Bloomberg API:
 
 
     - CSV files:
-        - apple_price
-        - twitter_price
-        - microsoft_price
+        - wacc.xlsx
+        - prices.xlsx
+        - sales_growth.xlsx
+        - market_cap.xlsx
+        - shares_outstanding.xlsx
         
         
-- Alpha Query (https://www.alphaquery.com/)
+- Morningstar (https://www.morningstar.com/)
 
 
-- Google (https://www.google.com/)
-d
+
 
 ## Data extraction and transformation
 
 In order to extract the data we have used two different methods. 
 
-On on hand we have downloaded a series of CVS files from yahoo finance to get the daily trading price for the three companies since the start of 2015. In this CVS files we are getting the open and close price as well as the volume.
-
-
-In second place we have used scrapping (Selenium) to get the quarterly earnings of these companies since 2015 as well as the estimates these companies had for those quarters.
-To these three tables we added a column of "Price_change" to see the daily percentage change in price. 
-
-
-Finally, we used scrapping to automatize the extraction of the first news link in Google for a certain stock in a certain day. To do this we filtered the results in the tables above by % price change and obtained those days were the % change in price was greater than an x amount (as the amount of results varied depending on the company used, I used different % amounts to have comparable results in terms of number of results shown), and then I created a function called "get_news_link" that searched in google for the company ticker i.e TWTR and the date i.e. 04/04/2022 and then copied the link for the first news on the Dataframe events_companyname.
+On first hand we extract the data from the API of Bloomberg and BQL (Bloomberg query language). We also use selenium to extract information from the financial statements for the selected companies.
 
 ## Outcomes
 
-- Extracción.ipynb
-- Transformation.ipynb
-- Load.ipynb
-- Analizing_data.ipynb
+- trialst.py
 - apifunctions.py
+- Data cleaning.ipynb
 
-## Database Schema
+## App Creation
 
-Finally I created a Database called etlproject where I uploaded the 9 tables created in the steps above and created a 1-to-1 relationship between them.
+***Link to app: https://share.streamlit.io/dgomezlechon/final-proyect-dcf-calculator/main/my-code/trialst.py***
+
+Finally I created an app using Streamlit in order to see the data obtained. This app is divided into three sections:
+
+- DCF_value: Here we can filter by the year and select as many companies as we want, in order to see their proyected cash flows as of that year and the DCF value of the company in that moment of time (all yearly data is as of the last working day of the year in the U.S.)
+
+- DCF_evolution: Here we can select an individual company and see how its valuation according to this model has evolved over time. Also we can see the companies market cap evolution and compare both to see whether the company was over or undervalued.
+
+- Investing strategy: 
+    
+    - Don't rebalance: For this strategy we can select the year (as of last working day) when we decide to invest according to this model, the year when we want to sell our positions and both the quantity invested and the number of companies to be bought. 
+
+The model calcualtes the discounted cash flow value of each company, applies a margin of safety of 30% percent and compares it with the market cap in that point in time. It then invests equally the amount between the x companies which are undervalued the most.
+    
+    - Rebalance: For this strategy we can select the same parameters as in the "DOnt rebalance" one. However in this case it assumes all our positions are sold at the end of each year. Then calculates the new companies to buy and buys them reinvesting profits (subtracting taxes of 20%).
 
 
-
-
-
-![Captura%20de%20Pantalla%202022-04-17%20a%20la%28s%29%209.17.00%20p.%C2%A0m..png](attachment:Captura%20de%20Pantalla%202022-04-17%20a%20la%28s%29%209.17.00%20p.%C2%A0m..png)
-
-
-```python
-
-```
