@@ -35,7 +35,7 @@ genre = st.sidebar.radio(
      ('DCF_value', 'DCF_evolution', 'Investing Strategy'))
 
 from PIL import Image
-image = Image.open('"data/link.png')
+image = Image.open("data/link.png")
 
 st.sidebar.image(image, caption='QR code')
 
