@@ -51,8 +51,4 @@ Finally I created an app using Streamlit in order to see the data obtained. This
 The model calcualtes the discounted cash flow value of each company, applies a margin of safety of 30% percent and compares it with the market cap in that point in time. It then invests equally the amount between the x companies which are undervalued the most.
 
    - Rebalance: For this strategy we can select the same parameters as in the "DOnt rebalance" one. However in this case it assumes all our positions are sold at the end of each year. Then calculates the new companies to buy and buys them reinvesting profits (subtracting taxes of 20%).
-    
-    
-    - Rebalance: For this strategy we can select the same parameters as in the "DOnt rebalance" one. However in this case it assumes all our positions are sold at the end of each year. Then calculates the new companies to buy and buys them reinvesting profits (subtracting taxes of 20%).
-
 
