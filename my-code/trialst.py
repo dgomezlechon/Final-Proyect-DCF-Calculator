@@ -34,11 +34,6 @@ genre = st.sidebar.radio(
      "What would you like to see?",
      ('DCF_value', 'DCF_evolution', 'Investing Strategy'))
 
-from PIL import Image
-image = Image.open("data/link.png")
-
-st.sidebar.image(image, caption='QR code')
-
 if genre == 'DCF_value':
      st.sidebar.write('Your selected: DCF_value.')
 
@@ -406,6 +401,9 @@ elif genre == 'Investing Strategy':
             
          st.metric("Total value of portfolio", "{}".format(f'{round(gain):,}'),  "{}%".format(round(100*(gain-cantidad_0)/cantidad_0,2)))
             
+from PIL import Image
+image = Image.open("data/link.png")
 
+st.sidebar.image(image, caption='QR code')
         
 
