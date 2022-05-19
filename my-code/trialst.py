@@ -399,7 +399,7 @@ elif genre == 'Investing Strategy':
              year=year+1
              year=str(year)
             
-         st.metric("Total value of portfolio", "{}".format(f'{round(gain):,}'),  "{}%".format(round(100*(gain-cantidad_0)/cantidad,2)))
+         st.metric("Total value of portfolio", "{}".format(f'{round(gain):,}'),  "{}%".format(round(100*(gain-cantidad_0)/cantidad_0,2)))
             
 
         
