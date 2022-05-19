@@ -323,7 +323,7 @@ elif genre == 'Investing Strategy':
         
              gain+=number_stocks[i]*prices[final_year][i]
         
-         st.metric("Total value of portfolio", "{}".format(f'{round(gain):,}'),  "{}%".format(round((gain-cantidad)/cantidad*100)))
+         st.metric("Total value of portfolio", "{}".format(f'{round(gain):,}'),  "{}%".format(round((gain-cantidad)/cantidad*100,2)))
 
      if genre == 'Rebalance':
          st.sidebar.write('Your selected: Rebalance.')
@@ -398,7 +398,7 @@ elif genre == 'Investing Strategy':
              year=year+1
              year=str(year)
             
-         st.metric("Total value of portfolio", "{}".format(f'{round(gain):,}'),  "{}%".format(round(100*(gain-cantidad)/cantidad)))
+         st.metric("Total value of portfolio", "{}".format(f'{round(gain):,}'),  "{}%".format(round(100*(gain-cantidad)/cantidad,2)))
             
 
         
